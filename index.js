@@ -29,15 +29,15 @@ async function run() {
     await client.connect();
     const database = client.db("ReactPortfoloiData");
     const AllBlogPost = database.collection("AllBlogPost");
+    const AllSlider = database.collection("AllSider");
 
 // ============ Create-blog-post for Blog Page=============== //
 
     // Add Blog Post By POST API
     app.post('/all-blog-post', async(req,res)=>{
       const BlogPost=req.body;
-     console.log('hit the API', BlogPost);
-      const result = await AllBlogPost.insertOne(BlogPost);
-      res.json(result)
+      const BlogPostResult = await AllBlogPost.insertOne(BlogPost);
+      res.json(BlogPostResult)
     });
 
     // Get Blog Post By GET API, 
@@ -52,16 +52,47 @@ async function run() {
     app.delete('/all-blog-post/:id', async(req,res)=>{
         const id = req.params.id;
         const query = {_id:ObjectId(id)};
-        const result = await AllBlogPost.deleteOne(query);
-        res.json(result);
+        const AllBlogPostresult = await AllBlogPost.deleteOne(query);
+        res.json(AllBlogPostresult);
+    })
+
+    //  ================= Slider =======================//
+
+    // Add Slider By POST API ......
+    app.post('/slider', async(req,res)=>{
+      const SliderPost = req.body;
+      const AllSliderResult =await AllSlider.insertOne(SliderPost);
+      res.json(AllSliderResult);
+
+
+    })
+
+    // Get Silder post by GET API ...
+    app.get('/slider', async(req,res)=>{
+      const cursor = AllSlider.find({});
+      const cursorSlider = await cursor.toArray()
+      res.send(cursorSlider);
+
+
+    })
+
+      // Delete Blog Post ....
+
+      app.delete('/slider/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)};
+        const AllSliderResult = await AllSlider.deleteOne(query);
+        res.json(AllSliderResult);
     })
     
+
     
   } finally {
     // await client.close();
   }
 }
 run().catch(console.dir);
+
 
 
 
