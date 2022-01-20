@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const cors = require('cors')
 const app = express();
 const port = 5000;
@@ -47,6 +47,14 @@ async function run() {
       res.send(BlogData)
     })
 
+    // Delete Blog Post ....
+
+    app.delete('/all-blog-post/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)};
+        const result = await AllBlogPost.deleteOne(query);
+        res.json(result);
+    })
     
     
   } finally {
