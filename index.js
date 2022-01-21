@@ -1,13 +1,14 @@
 
 const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 const cors = require('cors')
 const app = express();
 const port = 5000;
 require('dotenv').config()
 app.use(cors());
-
 app.use(express.json())
+
 
 
 
@@ -19,10 +20,7 @@ app.use(express.json())
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
-
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
 
 async function run() {
   try {
@@ -30,6 +28,7 @@ async function run() {
     const database = client.db("ReactPortfoloiData");
     const AllBlogPost = database.collection("AllBlogPost");
     const AllSlider = database.collection("AllSider");
+    const WorkingSection = database.collection("WorkingSection");
 
 // ============ Create-blog-post for Blog Page=============== //
 
@@ -86,6 +85,35 @@ async function run() {
     })
     
 
+      //  ================= Working Section =======================//
+
+       // Add Working Section By POST API ......
+    app.post('/work', async(req,res)=>{
+      const WorkingPost = req.body;
+      const AllworkingPostResult =await WorkingSection.insertOne(WorkingPost);
+      res.json(AllworkingPostResult);
+
+
+    })
+
+    // Get Silder post by GET API ...
+    app.get('/work', async(req,res)=>{
+      const cursor = WorkingSection.find({});
+      const cursorWorkingPost = await cursor.toArray()
+      res.send(cursorWorkingPost);
+
+
+    })
+
+      // Delete Blog Post ....
+
+      app.delete('/work/:id', async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)};
+        const AllWorkingResult = await WorkingSection.deleteOne(query);
+        res.json(AllWorkingResult);
+    })
+ 
     
   } finally {
     // await client.close();
