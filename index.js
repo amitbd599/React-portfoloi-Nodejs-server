@@ -29,6 +29,7 @@ async function run() {
     const AllBlogPost = database.collection("AllBlogPost");
     const AllSlider = database.collection("AllSider");
     const WorkingSection = database.collection("WorkingSection");
+    const ProjectSection = database.collection("ProjectSection");
 
 // ============ Create-blog-post for Blog Page=============== //
 
@@ -114,6 +115,35 @@ async function run() {
         res.json(AllWorkingResult);
     })
  
+
+       //  ================= Project Section =======================//
+
+       // Add Working Section By POST API ......
+       app.post('/project', async(req,res)=>{
+        const ProjectPost = req.body;
+        const AllProjectPostResult =await ProjectSection.insertOne(ProjectPost);
+        res.json(AllProjectPostResult);
+  
+  
+      })
+  
+      // Get Silder post by GET API ...
+      app.get('/project', async(req,res)=>{
+        const cursor = ProjectSection.find({});
+        const cursorProjectPost = await cursor.toArray()
+        res.send(cursorProjectPost);
+  
+  
+      })
+  
+        // Delete Blog Post ....
+  
+        app.delete('/project/:id', async(req,res)=>{
+          const id = req.params.id;
+          const query = {_id:ObjectId(id)};
+          const AllProjectResult = await ProjectSection.deleteOne(query);
+          res.json(AllProjectResult);
+      })
     
   } finally {
     // await client.close();
