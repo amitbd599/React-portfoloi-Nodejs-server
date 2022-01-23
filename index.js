@@ -46,11 +46,26 @@ async function run() {
       const BlogData = await cursor.toArray();
       res.send(BlogData)
     })
+    
+    // Get Blog Single With dynamic By GET API, 
+    app.get('/all-blog-post/:id', async(req,res)=>{
+      const id = req.params.id;
+      console.log(id);
+      const cursor = AllBlogPost.find({_id:ObjectId(id)});
+      const BlogData = await cursor.toArray();
+      console.log(BlogData);
+      res.send(BlogData) 
 
+    })
+    
+   
+    
+   
     // Delete Blog Post ....
 
     app.delete('/all-blog-post/:id', async(req,res)=>{
         const id = req.params.id;
+        // console.log(id);
         const query = {_id:ObjectId(id)};
         const AllBlogPostresult = await AllBlogPost.deleteOne(query);
         res.json(AllBlogPostresult);
