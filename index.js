@@ -28,6 +28,7 @@ async function run() {
     const AllSlider = database.collection("AllSider");
     const WorkingSection = database.collection("WorkingSection");
     const ProjectSection = database.collection("ProjectSection");
+    const CommentSection = database.collection("CommentSection");
 
     // ============ Create-blog-post for Blog Page=============== //
 
@@ -60,6 +61,7 @@ async function run() {
       });
     });
 
+
     // Get Blog Single With dynamic By GET API,
     app.get("/all-blog-post/:id", async (req, res) => {
       const id = req.params.id;
@@ -67,6 +69,8 @@ async function run() {
       const BlogData = await cursor.toArray();
       res.send(BlogData);
     });
+
+    
 
     // Delete Blog Post ....
 
@@ -151,6 +155,39 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const AllProjectResult = await ProjectSection.deleteOne(query);
       res.json(AllProjectResult);
+    });
+
+
+    //  ================= Comment Section =======================//
+
+    // Add Working Section By POST API ......
+    app.post("/comment", async (req, res) => {
+      const CommentPost = req.body;
+      const AllCommentPostResult = await CommentSection.insertOne(CommentPost);
+      res.json(AllCommentPostResult);
+    });
+
+    // app.get("/comment/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const cursor = CommentSection.find({ _id: ObjectId(id) });
+    //   const CommentData = await cursor.toArray();
+    //   res.send(CommentData);
+    // });
+
+    // Get Silder post by GET API ...
+    app.get("/comment", async (req, res) => {
+      const cursor = CommentSection.find({});
+      const cursorCommentPost = await cursor.toArray();
+      res.send(cursorCommentPost);
+    });
+
+    // Delete Blog Post ....
+
+    app.delete("/comment/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const AllCommentResult = await CommentSection.deleteOne(query);
+      res.json(AllCommentResult);
     });
   } finally {
     // await client.close();
