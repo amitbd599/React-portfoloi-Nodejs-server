@@ -9,14 +9,16 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 app.use("/", router); 
+require('dotenv').config()
 
 // MongoDB Database add...
 
-// portfolioReact
+// portfolioReact 
+
 // WEb2X42EvZfz3uns
 
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://portfolioReact:WEb2X42EvZfz3uns@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
