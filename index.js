@@ -4,7 +4,7 @@ const ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
 const cors = require("cors");
 const app = express();
-const port = 5000;
+const port =process.env.PORT || 5000;
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
@@ -201,5 +201,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Port is Running Here 5000");
+  console.log("Port is Running Here 5000"); 
 });
