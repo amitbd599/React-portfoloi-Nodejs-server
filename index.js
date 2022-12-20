@@ -4,21 +4,21 @@ const ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
 const cors = require("cors");
 const app = express();
-const port =process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
-app.use("/", router); 
-require('dotenv').config()
+app.use("/", router);
+require("dotenv").config();
 
 // MongoDB Database add...
 
-// portfolioReact 
+// portfolioReact
 
 // WEb2X42EvZfz3uns
 
 // const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://portfolioReact:WEb2X42EvZfz3uns@cluster0.vuvnd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`; 
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -66,7 +66,6 @@ async function run() {
       });
     });
 
-
     // Get Blog Single With dynamic By GET API,
     app.get("/all-blog-post/:id", async (req, res) => {
       const id = req.params.id;
@@ -74,8 +73,6 @@ async function run() {
       const BlogData = await cursor.toArray();
       res.send(BlogData);
     });
-
-    
 
     // Delete Blog Post ....
 
@@ -162,7 +159,6 @@ async function run() {
       res.json(AllProjectResult);
     });
 
-
     //  ================= Comment Section =======================//
 
     // Add Working Section By POST API ......
@@ -187,8 +183,6 @@ async function run() {
       const AllCommentResult = await CommentSection.deleteOne(query);
       res.json(AllCommentResult);
     });
-
-    
   } finally {
     // await client.close();
   }
@@ -203,5 +197,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Port is Running Here 5000"); 
+  console.log("Port is Running Here 5000");
 });
